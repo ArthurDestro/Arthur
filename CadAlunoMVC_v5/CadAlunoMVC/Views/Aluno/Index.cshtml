@@ -1,0 +1,52 @@
+﻿@model List<AlunoViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Listagem de Alunos</h2>
+
+<a href="/aluno/create">Novo Registro</a>
+<br />
+
+
+<table class="table table-responsive table-hover table-striped">
+    <tr>
+        <th>Ações</th>
+        <th>RA</th>
+        <th>Nome</th>
+        <th>Data de nascimento</th>
+        <th>Mensalidade</th>
+    </tr>
+    @foreach (var aluno in Model)
+    {
+        <tr>
+            <td>
+                <a href="/aluno/Edit?id=@aluno.Id">
+                    <img src="~/img/edit.png" class="icone"/>
+                </a>
+                &nbsp;&nbsp;
+                <a href="javascript:apagarAluno(@aluno.Id)">
+                    <img src="~/img/delete.png" class="icone" />
+                </a>
+            </td>
+            <td>@aluno.Id</td>
+            <td>@aluno.Nome</td>
+            <td>@aluno.DataNascimento.ToShortDateString()</td>
+            <td>
+
+                @* @if (aluno.Mensalidade != null)
+            {
+            @Convert.ToDouble(aluno.Mensalidade).ToString("c");
+            } *@
+
+                @aluno.Mensalidade?.ToString("c")
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function apagarAluno(id) {
+        if (confirm('Confirma a exclusão do registro?'))
+            location.href = 'aluno/Delete?id=' + id;
+    }
+</script>
